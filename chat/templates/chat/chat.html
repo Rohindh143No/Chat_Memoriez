@@ -1,0 +1,330 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memoriez</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.5s ease-in-out;
+        }
+
+        h1 {
+            color:rgb(0, 0, 0);
+            margin-bottom: 30px;
+            font-size: 2em;
+            letter-spacing: 1px;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: fadeIn 1s forwards 0.5s;
+        }
+
+        /* Form Container */
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            width: 100%;
+            max-width: 600px;
+            transform: translateY(50px);
+            opacity: 0;
+            animation: slideIn 1s forwards 1s;
+            text-align: center;
+        }
+
+        .form-container label {
+            display: block;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        /* Custom File Input */
+        .file-upload-container {
+            position: relative;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .file-upload {
+            display: none;
+        }
+
+        .file-upload-button {
+            padding: 15px 30px;
+            background-color:rgb(56, 102, 133); /* Lighter color */
+            color: white;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .file-upload-button:hover {
+            background-color:rgb(142, 23, 253); /* Slightly darker on hover */
+            transform: translateY(-3px);
+        }
+
+        .file-upload-button i {
+            margin-right: 10px;
+        }
+
+        .file-upload-button span {
+            font-weight: bold;
+        }
+
+        /* Generate Button Styling */
+        button[type="submit"] {
+            padding: 12px 30px;
+            background-color:rgb(245, 0, 253);
+            color: white;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color:rgb(0, 255, 13);
+            transform: translateY(-3px);
+        }
+
+        /* Error Message */
+        .error-message {
+            color: red;
+            margin-top: 20px;
+            font-size: 1.1em;
+            animation: fadeIn 1s forwards 2s;
+        }
+
+        /* Chat Container */
+        .chat-container {
+            margin-top: 40px;
+            width: 100%;
+            max-width: 800px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            max-height: 70vh;
+            text-align: left;
+            opacity: 0;
+            animation: fadeIn 1s forwards 1.5s;
+        }
+
+        .chat-container .messages {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 10px;
+            word-wrap: break-word;
+            font-size: 1.1em;
+            line-height: 1.6;
+            box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: messageIn 0.5s forwards;
+        }
+
+        .message .timestamp {
+            font-size: 0.85em;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        .left {
+            background-color: #e2f7ff;
+            align-self: flex-start;
+            text-align: left;
+        }
+
+        .right {
+            background-color: #e6ffe6;
+            align-self: flex-end;
+            text-align: right;
+        }
+
+        .message p {
+            margin-bottom: 0;
+        }
+
+        /* Hover effects */
+        .button-group {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .download-btn, .view-btn {
+            background-color:rgb(0, 204, 255);
+            padding: 10px 25px;
+            border-radius: 5px;
+            color: white;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .download-btn:hover, .view-btn:hover {
+            background-color:rgb(0, 255, 13);
+            transform: translateY(-3px);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes messageIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Visitor Count in Bottom Left Corner */
+        .visitor-count {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .form-container {
+                width: 90%;
+                padding: 20px;
+            }
+
+            .chat-container {
+                width: 90%;
+            }
+
+            .file-upload-button {
+                font-size: 1em;
+                padding: 12px 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>CREATE MEMORIEZ</h1>
+
+    <!-- File Upload Form -->
+    <div class="form-container">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="file-upload">SELECT FILE</label>
+            
+            <!-- File Upload Button -->
+            <div class="file-upload-container">
+                <input type="file" name="file" id="file-upload" class="file-upload" required>
+                <label for="file-upload" class="file-upload-button">
+                    <i class="fas fa-upload"></i><b><span>CLICK TO SELECT</span></b>
+                </label>
+            </div>
+
+            <button type="submit">GENERATE</button>
+        </form>
+    </div>
+
+    <!-- Error Message -->
+    {% if error %}
+        <div class="error-message">
+            <p>Error: {{ error }}</p>
+        </div>
+    {% endif %}
+
+    <!-- Chat File Interaction -->
+    {% if html_file_url %}
+        <div class="button-group">
+            
+            <a href="{{ html_file_url }}" target="_blank">
+                <button class="view-btn"><i class="fas fa-eye"></i> View Chat</button>
+            </a>
+            
+            <a href="{% url 'download_chat' participant=participant_1 %}">
+                <button class="download-btn"><i class="fas fa-download"></i> Download Chat</button>
+            </a>
+        </div>
+    {% endif %}
+
+    <!-- Display Chat Messages -->
+    {% if participant_0 and participant_1 %}
+        <div class="chat-container">
+            <div class="messages">
+                {% for timestamp, name, message in chat_data %}
+                    <div class="message {% if name == participant_0 %}right{% else %}left{% endif %}">
+                        <p>{{ message }}</p>
+                        <div class="timestamp">{{ timestamp|date:"h:i A" }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- Visitor Count in Bottom Left -->
+    <div class="visitor-count">
+        Visitor Count: {{ visitor_count }}
+    </div>
+</body>
+
+</html>

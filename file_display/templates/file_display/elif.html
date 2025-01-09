@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELIF</title>
+    <style>
+        /* General body styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            padding: 20px;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Table styling */
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: #fff;
+            transform: scale(0.98);
+            animation: scaleUp 0.5s ease-in-out forwards;
+        }
+
+        /* Table header styling */
+        th {
+            background-color: #3498db;
+            color: #fff;
+            text-align: left;
+            padding: 12px;
+            font-size: 1.1rem;
+        }
+
+        /* Table data cell styling */
+        td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #f1f1f1;
+            font-size: 1rem;
+        }
+
+        /* Hover effect for rows */
+        tr:hover {
+            background-color: #f9fafb;
+            transform: translateX(5px);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        /* Link styling */
+        a {
+            text-decoration: none;
+            color: #3498db;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #1abc9c;
+        }
+
+        /* Empty message styling */
+        .empty-message {
+            text-align: center;
+            color: #95a5a6;
+            font-style: italic;
+            font-size: 1.1rem;
+        }
+
+        /* Animation for table */
+        @keyframes scaleUp {
+            from {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <h1>ENCRYPTED</h1>
+
+    <!-- Table for displaying files -->
+    <table>
+        <thead>
+            <tr>
+                <th>TXT Files</th>
+                <th>HTML Files</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    {% if txt_files %}
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            {% for file in txt_files %}
+                                <li><a href="{% url 'display_chat_file' file %}">{{ file }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="empty-message">No TXT files found.</p>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if html_files %}
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            {% for file in html_files %}
+                                <li><a href="{% url 'display_chat_file' file %}">{{ file }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="empty-message">No HTML files found.</p>
+                    {% endif %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
