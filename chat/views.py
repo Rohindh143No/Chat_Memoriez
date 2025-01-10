@@ -38,10 +38,6 @@ def chat_file_view(request, filename):
 
 # Main chat upload and analysis view
 def chat_view(request):
-    if 'visitor_count' not in request.session:
-        request.session['visitor_count'] = 0  # Initialize the visitor count
-    request.session['visitor_count'] += 1  # Increment the count
-
     if request.method == 'POST' and 'file' in request.FILES:
         uploaded_file = request.FILES['file']
         fs = FileSystemStorage()
@@ -67,12 +63,11 @@ def chat_view(request):
                 'participant_1': participants[1],  # Participant 1
                 'participant_0_count': message_counts.get(participants[0], 0),  # Participant 0 count
                 'participant_1_count': message_counts.get(participants[1], 0),  # Participant 1 count
-                'visitor_count': request.session['visitor_count'],  # Pass the visitor count to the template
             })
         except Exception as e:
             return render(request, 'chat/chat.html', {'error': f"Error processing file: {str(e)}"})
 
-    return render(request, 'chat/chat.html', {'visitor_count': request.session['visitor_count']})
+    return render(request, 'chat/chat.html')
 
 
 # View to handle file download
