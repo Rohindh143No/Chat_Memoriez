@@ -5,7 +5,6 @@ from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from .program import parse_chat, generate_html
 
-
 # View to list chat files (HTML and TXT)
 def chat_file_list(request):
     media_dir = os.path.join(settings.MEDIA_ROOT, 'chat_files')
@@ -38,10 +37,22 @@ def chat_file_view(request, filename):
 
 # Main chat upload and analysis view
 def chat_view(request):
+    if 'visitor_count' not in request.session:
+        request.session['visitor_count'] = 0  # Initialize the visitor count
+    request.session['visitor_count'] += 1  # Increment the count
+
     if request.method == 'POST' and 'file' in request.FILES:
         uploaded_file = request.FILES['file']
+        
+        # Ensure the 'chat_files' directory exists
+        chat_files_dir = os.path.join(settings.MEDIA_ROOT, 'chat_files')
+        os.makedirs(chat_files_dir, exist_ok=True)
+
+        # Set the path to save the uploaded file
+        file_path = os.path.join(chat_files_dir, uploaded_file.name)
+
+        # Save the file
         fs = FileSystemStorage()
-        file_path = os.path.join(settings.MEDIA_ROOT, 'chat_files', uploaded_file.name)
         fs.save(file_path, uploaded_file)
 
         try:
@@ -49,7 +60,7 @@ def chat_view(request):
             chat_data, participants, message_counts = parse_chat(file_path)
 
             # Generate HTML output based on parsed data
-            output_html = os.path.join(settings.MEDIA_ROOT, 'chat_files', f"{participants[1]}.html")
+            output_html = os.path.join(chat_files_dir, f"{participants[1]}.html")
             generate_html(chat_data, participants, message_counts, output_html)
 
             # Provide the URL to the generated HTML file
@@ -63,11 +74,12 @@ def chat_view(request):
                 'participant_1': participants[1],  # Participant 1
                 'participant_0_count': message_counts.get(participants[0], 0),  # Participant 0 count
                 'participant_1_count': message_counts.get(participants[1], 0),  # Participant 1 count
+                'visitor_count': request.session['visitor_count'],  # Pass the visitor count to the template
             })
         except Exception as e:
             return render(request, 'chat/chat.html', {'error': f"Error processing file: {str(e)}"})
 
-    return render(request, 'chat/chat.html')
+    return render(request, 'chat/chat.html', {'visitor_count': request.session['visitor_count']})
 
 
 # View to handle file download
