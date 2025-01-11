@@ -62,7 +62,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Use absolute path for PythonAnyw
 # Static files configuration
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']  # This is for local development; for production, STATIC_ROOT will be used
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # Collect static files here in production
+#STATIC_ROOT = BASE_DIR / 'staticfiles'  # Collect static files here in production
 
 
 # Location of static files in development (for non-app static files like stylesheets, images, etc.)
