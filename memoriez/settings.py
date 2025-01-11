@@ -104,11 +104,8 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-<<<<<<< HEAD
+
 # Static files storage (for production)
 # STATIC_ROOT = BASE_DIR / 'staticfiles'  # Uncomment and configure this for production if needed.
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-=======
-# Default primary key field type
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
->>>>>>> 26b9eb3d568b6df17aefdf55a2598dc6061dcae7
+
