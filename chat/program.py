@@ -10,27 +10,40 @@ def parse_chat(file_path):
     chat_data = []
     participants = set()
     message_counts = {}
+    
     for line in lines:
-        try:
-            timestamp, rest = line.split(" - ", 1)
-            name, message = rest.split(": ", 1)
-            timestamp = datetime.strptime(timestamp, "%m/%d/%y, %I:%M %p")
-            chat_data.append((timestamp, name.strip(), message.strip()))
-            participants.add(name.strip())
-            if name.strip() not in message_counts:
-                message_counts[name.strip()] = 0
-            message_counts[name.strip()] += 1
-        except ValueError:
+        # Skip system message lines
+        if "Messages and calls are end-to-end encrypted" in line:
             continue
+        
+        try:
+            # Extract the timestamp and the rest of the line (which contains name and message)
+            timestamp, rest = line.split(" - ", 1)
+            
+            # Extract the name and message from the remaining part
+            if ":" not in rest:
+                continue  # Skip lines that don't follow the expected name: message format
+            
+            name, message = rest.split(": ", 1)
+            timestamp = datetime.strptime(timestamp, "%d/%m/%Y, %I:%M %p")
+            name = name.strip()
+
+            # Collect chat data and participant names
+            chat_data.append((timestamp, name, message.strip()))
+            participants.add(name)
+            
+            # Count messages for each participant
+            if name not in message_counts:
+                message_counts[name] = 0
+            message_counts[name] += 1
+            
+        except ValueError:
+            continue  # Skip any lines that don't match the expected format
 
     if len(participants) != 2:
         raise ValueError("Chat file should have exactly two participants.")
     
-    participants = list(participants)
-    for participant in participants:
-        if participant not in message_counts:
-            message_counts[participant] = 0
-
+    participants = list(participants)  # List of participant names
     return chat_data, participants, message_counts
 
 def generate_html(chat_data, participants, message_counts, output_html):

@@ -5,7 +5,6 @@ from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from .program import parse_chat, generate_html
 
-
 # View to list chat files (HTML and TXT)
 def chat_file_list(request):
     media_dir = os.path.join(settings.MEDIA_ROOT, 'chat_files')
@@ -44,8 +43,16 @@ def chat_view(request):
 
     if request.method == 'POST' and 'file' in request.FILES:
         uploaded_file = request.FILES['file']
+        
+        # Ensure the 'chat_files' directory exists
+        chat_files_dir = os.path.join(settings.MEDIA_ROOT, 'chat_files')
+        os.makedirs(chat_files_dir, exist_ok=True)
+
+        # Set the path to save the uploaded file
+        file_path = os.path.join(chat_files_dir, uploaded_file.name)
+
+        # Save the file
         fs = FileSystemStorage()
-        file_path = os.path.join(settings.MEDIA_ROOT, 'chat_files', uploaded_file.name)
         fs.save(file_path, uploaded_file)
 
         try:
@@ -53,7 +60,7 @@ def chat_view(request):
             chat_data, participants, message_counts = parse_chat(file_path)
 
             # Generate HTML output based on parsed data
-            output_html = os.path.join(settings.MEDIA_ROOT, 'chat_files', f"{participants[1]}.html")
+            output_html = os.path.join(chat_files_dir, f"{participants[1]}.html")
             generate_html(chat_data, participants, message_counts, output_html)
 
             # Provide the URL to the generated HTML file
