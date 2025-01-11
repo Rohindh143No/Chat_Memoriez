@@ -6,7 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
   # Replace with a proper method to set it securely in production
 
 # Debug Mode (Should be False in production)
-DEBUG = False  # Set to False in production
+DEBUG = True  # Set to False in production
 ALLOWED_HOSTS = ['memoriezz.pythonanywhere.com']  # Add all allowed domains for production here
 
 # Installed Apps
