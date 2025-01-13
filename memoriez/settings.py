@@ -65,7 +65,7 @@ STATIC_URL = '/static/'
 
 # Location of static files in development (for non-app static files like stylesheets, images, etc.)
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),  # Your project's static files directory
+    os.path.join(BASE_DIR, 'memoriez'),  # Your project's static files directory
 ]
 
 # Default primary key field type
@@ -103,3 +103,4 @@ USE_TZ = True
 
 # Static files storage (for production)
 # STATIC_ROOT = BASE_DIR / 'staticfiles'  # Uncomment and configure this for production if needed.
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")

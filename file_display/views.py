@@ -7,7 +7,7 @@ from django.conf import settings
 # View to list chat files (HTML and TXT) from the media directory
 def display_chat_file_list(request):
     # Path to the MEDIA_ROOT directory
-    media_dir = settings.MEDIA_ROOT
+    media_dir = os.path.join(settings.MEDIA_ROOT,'chat_files')
 
     # Ensure the directory exists
     if not os.path.exists(media_dir):
@@ -26,7 +26,7 @@ def display_chat_file_list(request):
 # View to display .txt or .html files
 def display_file(request, filename):
     # Path to the MEDIA_ROOT directory
-    media_dir = settings.MEDIA_ROOT
+    media_dir = os.path.join(settings.MEDIA_ROOT ,'chat_files')
     file_path = os.path.join(media_dir, filename)
 
     # Check if the file exists

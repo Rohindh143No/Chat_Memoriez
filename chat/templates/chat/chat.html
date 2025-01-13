@@ -234,17 +234,8 @@
             }
         }
 
-        /* Visitor Count in Bottom Left Corner */
-        .visitor-count {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 1em;
-        }
+        
+        
 
         /* Responsive Design */
         @media (max-width: 768px) {
@@ -265,7 +256,12 @@
     </style>
 </head>
 
-<body>
+<body><header style="background-color: #333; padding: 15px; color: white; width: 100%; position: fixed; top: 0; z-index: 1000; text-align: center; border-bottom: 2px solid #1abc9c;">
+    <h1 style="margin: 0; font-size: 1.8em;">MEMORIEZ</h1>
+    <a href="#how-to-work" style="color: #1abc9c; text-decoration: none; font-size: 1em;">How to Work</a>
+</header>
+
+
     <h1>CREATE MEMORIEZ</h1>
 
     <!-- File Upload Form -->
@@ -321,10 +317,12 @@
         </div>
     {% endif %}
 
-    <!-- Visitor Count in Bottom Left -->
-    <div class="visitor-count">
-        Visitor Count: {{ visitor_count }}
-    </div>
+    <footer style="background-color: #333; padding: 15px; color: white; width: 100%; position: fixed; bottom: 0; text-align: center; border-top: 2px solid #1abc9c;">
+        <p style="margin: 0; font-size: 1em;">&copy; 2025 MEMORIEZ. All rights reserved.</p>
+    </footer>
+    
+    
 </body>
+
 
 </html>
