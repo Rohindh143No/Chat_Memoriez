@@ -257,7 +257,11 @@
         // Delete the file
         function deleteFile() {
             // In a real-world scenario, send an AJAX request to the server to delete the file
+<<<<<<< HEAD
             //alert(`${fileTypeToDelete.toUpperCase()} file '${fileToDelete}' deleted successfully!`);
+=======
+            alert(`${fileTypeToDelete.toUpperCase()} file '${fileToDelete}' deleted successfully!`);
+>>>>>>> 8fe971fcb122065610091eb7b19409331b6ead2d
 
             // Simulate file removal (for demo purposes)
             const listItem = document.querySelector(`li:has(button[onclick="showConfirmModal('${fileToDelete}', '${fileTypeToDelete}')"])`);
