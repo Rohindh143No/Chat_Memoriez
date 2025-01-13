@@ -108,7 +108,7 @@ USE_TZ = True
 
 # Static files storage (for production)
 
-# STATIC_ROOT = BASE_DIR / 'staticfiles'  # Uncomment and configure this for production if needed.
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # Uncomment and configure this for production if needed.
+
 
 
