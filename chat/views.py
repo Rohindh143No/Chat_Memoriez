@@ -111,7 +111,8 @@ def download_chat(request, participant):
 
 
 # --------------------- Chat File Display View -------------------------
-
+def howto_view(request):
+    return render(request, 'chat/howto.html')
 def view_chat(request, participant):
     """
     View to display the content of a generated chat HTML file.

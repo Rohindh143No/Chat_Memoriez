@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),  # Admin panel
     path('chat/', include('chat.urls')),
-    #path('selif/', include('file_display.urls')), # Include your app URLs
+    path('selif/', include('file_display.urls')), # Include your app URLs
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # Serve media files  # Include the URLs from the chat app
 
 # Serve media and static files during development
