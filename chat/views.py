@@ -5,7 +5,6 @@ from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from .program import parse_chat, generate_html
 
-
 # --------------------- Chat File Management Views -----------------------
 
 def chat_file_list(request):
@@ -19,7 +18,7 @@ def chat_file_list(request):
     txt_files = [f for f in os.listdir(media_dir) if f.endswith('.txt')]
     html_files = [f for f in os.listdir(media_dir) if f.endswith('.html')]
 
-    return render(request, 'chat/elif.html', {
+    return render(request, 'chat/chat.html', {
         'txt_files': txt_files,
         'html_files': html_files,
     })
