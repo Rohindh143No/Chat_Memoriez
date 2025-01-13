@@ -37,9 +37,9 @@ def chat_file_view(request, filename):
 
 # Main chat upload and analysis view
 def chat_view(request):
-    """if 'visitor_count' not in request.session:
+    if 'visitor_count' not in request.session:
         request.session['visitor_count'] = 0  # Initialize the visitor count
-    request.session['visitor_count'] += 132  # Increment the count"""
+    request.session['visitor_count'] += 132  # Increment the count
 
     if request.method == 'POST' and 'file' in request.FILES:
         uploaded_file = request.FILES['file']

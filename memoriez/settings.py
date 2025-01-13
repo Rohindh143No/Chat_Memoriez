@@ -4,10 +4,11 @@ from pathlib import Path
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
   # Replace with a proper method to set it securely in production
+SECRET_KEY = 'django-insecure-^q1n92h*=4fl5l+iu)gqatfa5s@%n_u4#r^)fve%8$i&l+slyn'
 
 # Debug Mode (Should be False in production)
 DEBUG = True  # Set to False in production
-ALLOWED_HOSTS = ['memoriezz.pythonanywhere.com']  # Add all allowed domains for production here
+ALLOWED_HOSTS = []  # Add all allowed domains for production here
 
 # Installed Apps
 INSTALLED_APPS = [
