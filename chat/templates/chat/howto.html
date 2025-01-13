@@ -15,7 +15,7 @@
 
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #121212;
+            background-color: #0a0a0a;
             color: #fff;
             display: flex;
             flex-direction: column;
@@ -27,50 +27,50 @@
         }
 
         h1 {
-            font-size: 2.5em;
+            font-size: 3em;
             margin-bottom: 20px;
-            color: #1abc9c;
+            color:rgb(0, 0, 0); /* Neon aqua color */
             text-transform: uppercase;
+            text-shadow: 0 0 15px #00ffff, 0 0 25px #00ffff;
         }
 
         .content {
-            max-width: 800px;
+            max-width: 900px;
             width: 100%;
-            background-color: #1f1f1f;
-            border-radius: 8px;
+            background-color: #1a1a1a;
+            border-radius: 10px;
             padding: 30px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
         }
 
         .step {
             display: flex;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             font-size: 1.2em;
+            color: #ccc;
         }
 
         .step-icon {
-            margin-right: 15px;
-            font-size: 2em;
-            color: #1abc9c;
-        }
-
-        .step p {
-            margin: 0;
-            color: #ccc;
+            margin-right: 20px;
+            font-size: 2.5em;
+            color: #00ffff; /* Neon aqua */
+            text-shadow: 0 0 10px #00ffff;
         }
 
         .step-number {
             font-weight: bold;
             font-size: 1.5em;
             color: #fff;
-            background-color: #1abc9c;
+            background-color:rgb(255, 32, 154);
+            text-shadow: 0 0 10px #00ffff;
             border-radius: 50%;
-            width: 35px;
-            height: 35px;
+            width: 40px;
+            height: 40px;
             display: flex;
             justify-content: center;
             align-items: center;
+            margin-right: 15px;
         }
 
         .app-icons {
@@ -85,27 +85,32 @@
             padding: 15px;
             border-radius: 50%;
             font-size: 2em;
-            color: #fff;
+            color: #00ffff;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
         }
 
         .app-icon:hover {
-            background-color: #1abc9c;
+            background-color: #00ffff;
+            color: #333;
+            transform: scale(1.1);
         }
 
         .footer {
-            position: absolute;
-            bottom: 20px;
-            width: 100%;
+            margin-top: 40px;
             text-align: center;
             font-size: 1em;
             color: #888;
         }
 
         .footer a {
-            color: #1abc9c;
+            color: #00ffff;
             text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
         }
     </style>
 </head>
@@ -117,75 +122,54 @@
         <!-- Step 1 -->
         <div class="step">
             <div class="step-number">1</div>
-            <div>
-                <i class="fab fa-whatsapp step-icon"></i>
-                <p>Open WhatsApp and go to any chat</p>
-            </div>
+            <div class="step-icon"><i class="fab fa-whatsapp"></i></div>
+            <p>Open WhatsApp and go to any chat.</p>
         </div>
 
         <!-- Step 2 -->
         <div class="step">
             <div class="step-number">2</div>
-            <div>
-                <i class="fas fa-ellipsis-h step-icon"></i>
-                <p>Click on the 3 dots in the top right corner</p>
-            </div>
+            <div class="step-icon"><i class="fas fa-ellipsis-h"></i></div>
+            <p>Click on the 3 dots in the top right corner.</p>
         </div>
 
         <!-- Step 3 -->
         <div class="step">
             <div class="step-number">3</div>
-            <div>
-                <i class="fas fa-download step-icon"></i>
-                <p>Select "Export Chat" without Media</p>
-            </div>
+            <div class="step-icon"><i class="fas fa-download"></i></div>
+            <p>Select "Export Chat" without Media.</p>
         </div>
 
         <!-- Step 4 -->
         <div class="step">
             <div class="step-number">4</div>
-            <div>
-                <i class="fas fa-folder-open step-icon"></i>
-                <p>The chat will be exported as a ZIP file. Extract it to a folder.</p>
-            </div>
+            <div class="step-icon"><i class="fas fa-folder-open"></i></div>
+            <p>The chat will be exported as a ZIP file. Extract it to a folder.</p>
         </div>
 
         <!-- Step 5 -->
         <div class="step">
             <div class="step-number">5</div>
-            <div>
-                <i class="fas fa-globe step-icon"></i>
-                <p>Go to MEMORIEZ website and select the extracted ZIP file.</p>
-            </div>
+            <div class="step-icon"><i class="fas fa-globe"></i></div>
+            <p>Go to the MEMORIEZ website and select the extracted ZIP file.</p>
         </div>
 
         <!-- Step 6 -->
         <div class="step">
             <div class="step-number">6</div>
-            <div>
-                <i class="fas fa-arrow-right step-icon"></i>
-                <p>Click "Generate" to process your file.</p>
-            </div>
+            <div class="step-icon"><i class="fas fa-arrow-right"></i></div>
+            <p>Click "Generate" to process your file.</p>
         </div>
 
         <!-- Step 7 -->
         <div class="step">
             <div class="step-number">7</div>
-            <div>
-                <i class="fas fa-eye step-icon"></i>
-                <p>After processing, you can either view or download your chat file.</p>
-            </div>
+            <div class="step-icon"><i class="fas fa-eye"></i></div>
+            <p>After processing, you can either view or download your chat file.</p>
         </div>
     </div>
 
-    <div class="app-icons">
-        <div class="app-icon">
-            <i class="fab fa-whatsapp"></i>
-        </div>
-        <div class="app-icon">
-            <i class="fab fa-chrome"></i>
-        </div>
-    </div>
+   
 
     <div class="footer">
         <p>&copy; 2025 MEMORIEZ. All rights reserved.</p>
