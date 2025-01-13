@@ -4,6 +4,8 @@ from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from .program import parse_chat, generate_html
+from django.utils.crypto import get_random_string
+
 
 # --------------------- Chat File Management Views -----------------------
 
@@ -51,11 +53,22 @@ def chat_view(request):
         request.session['visitor_count'] = 0  # Initialize visitor count
     request.session['visitor_count'] += 1  # Increment the count
 
-    if request.method == 'POST' and 'file' in request.FILES:
+    if request.method == 'POST' and request.FILES.get('file'):
         uploaded_file = request.FILES['file']
-        fs = FileSystemStorage()
-        file_path = os.path.join(settings.MEDIA_ROOT, 'chat_files', uploaded_file.name)
-        fs.save(file_path, uploaded_file)
+        
+        # Generate a safe file name by removing unsafe characters
+        file_name = uploaded_file.name
+        sanitized_file_name = "".join(c for c in file_name if c.isalnum() or c in ("-", "_", ".", " "))
+        
+        # Alternatively, generate a unique name to avoid any conflicts:
+        # sanitized_file_name = get_random_string(10) + ".txt"
+        
+        # Set file path and ensure directories exist
+        file_path = os.path.join(settings.MEDIA_ROOT, 'chat_files', sanitized_file_name)
+        
+        # Save file using FileSystemStorage
+        fs = FileSystemStorage(location=os.path.join(settings.MEDIA_ROOT, 'chat_files'))
+        fs.save(sanitized_file_name, uploaded_file)
 
         try:
             # Parse the chat file
@@ -82,8 +95,6 @@ def chat_view(request):
             return render(request, 'chat/chat.html', {'error': f"Error processing file: {str(e)}"})
 
     return render(request, 'chat/chat.html', {'visitor_count': request.session['visitor_count']})
-
-
 # --------------------- Chat File Download View -------------------------
 
 def download_chat(request, participant):
