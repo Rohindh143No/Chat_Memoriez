@@ -36,14 +36,6 @@ def chat_file_view(request, filename):
 
 
 # Main chat upload and analysis view
-import re
-import os
-from django.core.files.storage import FileSystemStorage
-from django.conf import settings
-from .program import parse_chat, generate_html
-from django.utils.text import slugify
-
-# Main chat upload and analysis view
 def chat_view(request):
     if 'visitor_count' not in request.session:
         request.session['visitor_count'] = 0  # Initialize the visitor count
@@ -56,11 +48,8 @@ def chat_view(request):
         chat_files_dir = os.path.join(settings.MEDIA_ROOT, 'chat_files')
         os.makedirs(chat_files_dir, exist_ok=True)
 
-        # Sanitize the file name to prevent path traversal
-        safe_filename = slugify(uploaded_file.name)  # This will remove unwanted characters
-
         # Set the path to save the uploaded file
-        file_path = os.path.join(chat_files_dir, safe_filename)
+        file_path = os.path.join(chat_files_dir, uploaded_file.name)
 
         # Save the file
         fs = FileSystemStorage()
@@ -91,6 +80,7 @@ def chat_view(request):
             return render(request, 'chat/chat.html', {'error': f"Error processing file: {str(e)}"})
 
     return render(request, 'chat/chat.html', {'visitor_count': request.session['visitor_count']})
+
 
 # View to handle file download
 def download_chat(request, participant):

@@ -19,7 +19,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'chat',  # Your chat app
-    'file_display',  # Your file display app (if any)
+    #'file_display',  # Your file display app (if any)
 ]
 
 # Middleware configuration
