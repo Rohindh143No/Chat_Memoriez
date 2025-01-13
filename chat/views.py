@@ -7,7 +7,7 @@ from .program import parse_chat, generate_html
 
 # View to list chat files (HTML and TXT)
 def chat_file_list(request):
-    media_dir = os.path.join(settings.MEDIA_ROOT, 'chat_files')
+    media_dir = os.path.join(settings.MEDIA_ROOT)
     os.makedirs(media_dir, exist_ok=True)  # Ensure directory exists
 
     # List all .txt and .html files
@@ -22,42 +22,37 @@ def chat_file_list(request):
 
 # View to serve individual chat files (either .txt or .html)
 def chat_file_view(request, filename):
-    media_dir = os.path.join(settings.MEDIA_ROOT, 'chat_files')
+    media_dir = os.path.join(settings.MEDIA_ROOT)
     file_path = os.path.join(media_dir, filename)
 
-    # Ensure file exists
     if not os.path.exists(file_path):
-        raise Http404(f"File '{filename}' not found.")
+        raise Http404("File not found")
 
-    # Determine content type based on file extension
     content_type = "text/html" if filename.endswith('.html') else "text/plain"
+    with open(file_path, 'r', encoding='utf-8') as file:
+        content = file.read()
 
-    # Read the file and return content in the correct format
-    try:
-        with open(file_path, 'r', encoding='utf-8') as file:
-            content = file.read()
-        return HttpResponse(content, content_type=content_type)
-    except Exception as e:
-        raise Http404(f"Error reading file: {str(e)}")
+    return HttpResponse(content, content_type=content_type)
 
 
 # Main chat upload and analysis view
 def chat_view(request):
     if 'visitor_count' not in request.session:
         request.session['visitor_count'] = 0  # Initialize the visitor count
-    request.session['visitor_count'] += 132  # Increment the count
+    request.session['visitor_count'] += 132  # Increment the count"""
 
-    # Handle file upload and processing
     if request.method == 'POST' and 'file' in request.FILES:
         uploaded_file = request.FILES['file']
-
+        
         # Ensure the 'chat_files' directory exists
-        chat_files_dir = os.path.join(settings.MEDIA_ROOT, 'chat_files')
+        chat_files_dir = os.path.join(settings.MEDIA_ROOT)
         os.makedirs(chat_files_dir, exist_ok=True)
 
-        # Save the uploaded file
-        fs = FileSystemStorage()
+        # Set the path to save the uploaded file
         file_path = os.path.join(chat_files_dir, uploaded_file.name)
+
+        # Save the file
+        fs = FileSystemStorage()
         fs.save(file_path, uploaded_file)
 
         try:
@@ -92,13 +87,10 @@ def download_chat(request, participant):
     file_path = os.path.join(settings.MEDIA_ROOT, 'chat_files', f"{participant}.html")
 
     if os.path.exists(file_path):
-        try:
-            response = FileResponse(open(file_path, 'rb'), as_attachment=True, filename=f'{participant}.html')
-            return response
-        except Exception as e:
-            return render(request, 'chat/chat.html', {'error': f"Error while downloading file: {str(e)}"})
+        response = FileResponse(open(file_path, 'rb'), as_attachment=True, filename=f'{participant}.html')
+        return response
     else:
-        return render(request, 'chat/chat.html', {'error': f"File '{participant}.html' not found."})
+        return render(request, 'chat/chat.html', {'error': 'File not found.'})
 
 
 # View to display the generated chat HTML file
@@ -108,13 +100,9 @@ def view_chat(request, participant):
 
     file_path = os.path.join(settings.MEDIA_ROOT, 'chat_files', f"{participant}.html")
 
-    # Check if file exists
     if os.path.exists(file_path):
-        try:
-            with open(file_path, 'r', encoding='utf-8') as file:
-                content = file.read()
-            return render(request, 'chat/view_chat.html', {'content': content})
-        except Exception as e:
-            return render(request, 'chat/chat.html', {'error': f"Error reading file: {str(e)}"})
+        with open(file_path, 'r', encoding='utf-8') as file:
+            content = file.read()
+        return render(request, 'chat/view_chat.html', {'content': content})
     else:
-        return render(request, 'chat/chat.html', {'error': f"File '{participant}.html' not found."})
+        return render(request, 'chat/chat.html', {'error': 'File not found.'})
