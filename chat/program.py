@@ -3,6 +3,8 @@ from datetime import datetime
 def get_file_path():
     return input("Enter the file path of the chat file (e.g., sample.txt): ").strip()
 
+from datetime import datetime
+
 def parse_chat(file_path):
     with open(file_path, "r", encoding="utf-8") as file:
         lines = file.readlines()
@@ -10,40 +12,47 @@ def parse_chat(file_path):
     chat_data = []
     participants = set()
     message_counts = {}
-    
+
     for line in lines:
         # Skip system message lines
         if "Messages and calls are end-to-end encrypted" in line:
             continue
         
         try:
-            # Extract the timestamp and the rest of the line (which contains name and message)
+            # Extract timestamp and the rest of the line
             timestamp, rest = line.split(" - ", 1)
-            
-            # Extract the name and message from the remaining part
-            if ":" not in rest:
-                continue  # Skip lines that don't follow the expected name: message format
-            
-            name, message = rest.split(": ", 1)
-            timestamp = datetime.strptime(timestamp, "%d/%m/%Y, %I:%M %p")
-            name = name.strip()
 
-            # Collect chat data and participant names
+            # Try both date formats
+            try:
+                timestamp = datetime.strptime(timestamp, "%m/%d/%y, %I:%M %p")
+            except ValueError:
+                timestamp = datetime.strptime(timestamp, "%d/%m/%Y, %I:%M %p")
+
+            # Skip invalid lines without name: message
+            if ":" not in rest:
+                continue
+
+            # Extract name and message
+            name, message = rest.split(": ", 1)
+            name = name.strip()
+            
+            # Collect chat data
             chat_data.append((timestamp, name, message.strip()))
             participants.add(name)
             
-            # Count messages for each participant
+            # Count messages
             if name not in message_counts:
                 message_counts[name] = 0
             message_counts[name] += 1
-            
-        except ValueError:
-            continue  # Skip any lines that don't match the expected format
 
+        except ValueError:
+            continue  # Skip invalid lines
+
+    # Ensure exactly two participants
     if len(participants) != 2:
         raise ValueError("Chat file should have exactly two participants.")
-    
-    participants = list(participants)  # List of participant names
+
+    participants = list(participants)
     return chat_data, participants, message_counts
 
 def generate_html(chat_data, participants, message_counts, output_html):
