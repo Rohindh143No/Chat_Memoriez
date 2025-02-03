@@ -2,7 +2,7 @@ from datetime import datetime
 
 def get_file_path():
     return input("Enter the file path of the chat file (e.g., sample.txt): ").strip()
-"""
+
 from datetime import datetime
 
 def parse_chat(file_path):
@@ -17,7 +17,7 @@ def parse_chat(file_path):
         # Skip system message lines
         if "Messages and calls are end-to-end encrypted" in line:
             continue
-
+        
         try:
             # Extract timestamp and the rest of the line
             timestamp, rest = line.split(" - ", 1)
@@ -35,11 +35,11 @@ def parse_chat(file_path):
             # Extract name and message
             name, message = rest.split(": ", 1)
             name = name.strip()
-
+            
             # Collect chat data
             chat_data.append((timestamp, name, message.strip()))
             participants.add(name)
-
+            
             # Count messages
             if name not in message_counts:
                 message_counts[name] = 0
@@ -49,72 +49,6 @@ def parse_chat(file_path):
             continue  # Skip invalid lines
 
     # Ensure exactly two participants
-    if len(participants) != 2:
-        raise ValueError("Chat file should have exactly two participants.")
-
-    participants = list(participants)
-    return chat_data, participants, message_counts
-"""
-def parse_chat(file_path):
-    with open(file_path, "r", encoding="utf-8") as file:
-        lines = file.readlines()
-
-    chat_data = []
-    participants = set()
-    message_counts = {}
-
-    # Define all possible date-time formats
-    datetime_formats = [
-        "%d/%m/%Y, %I:%M %p",  # DD/MM/YYYY, 12-hour format
-        "%d/%m/%Y, %H:%M",     # DD/MM/YYYY, 24-hour format
-        "%m/%d/%Y, %I:%M %p",  # MM/DD/YYYY, 12-hour format
-        "%m/%d/%Y, %H:%M",     # MM/DD/YYYY, 24-hour format
-        "%d/%m/%y, %I:%M %p",  # DD/MM/YY, 12-hour format
-        "%d/%m/%y, %H:%M",     # DD/MM/YY, 24-hour format
-        "%m/%d/%y, %I:%M %p",  # MM/DD/YY, 12-hour format
-        "%m/%d/%y, %H:%M"      # MM/DD/YY, 24-hour format
-    ]
-
-    for line in lines:
-        # Skip system message lines
-        if "Messages and calls are end-to-end encrypted" in line:
-            continue
-
-        try:
-            # Extract timestamp and the rest of the message
-            timestamp, rest = line.split(" - ", 1)
-
-            # Parse timestamp using available formats
-            for fmt in datetime_formats:
-                try:
-                    timestamp = datetime.strptime(timestamp.strip(), fmt)
-                    break
-                except ValueError:
-                    continue
-            else:
-                # If no format matches, skip this line
-                continue
-
-            # Extract name and message
-            if ":" not in rest:
-                continue  # Skip lines without a valid name: message format
-
-            name, message = rest.split(": ", 1)
-            name = name.strip()
-            message = message.strip()
-
-            # Collect chat data and participants
-            chat_data.append((timestamp, name, message))
-            participants.add(name)
-
-            # Count messages for each participant
-            if name not in message_counts:
-                message_counts[name] = 0
-            message_counts[name] += 1
-
-        except ValueError:
-            continue  # Skip lines that don't match the expected format
-
     if len(participants) != 2:
         raise ValueError("Chat file should have exactly two participants.")
 
@@ -271,7 +205,7 @@ def generate_html(chat_data, participants, message_counts, output_html):
         .highlight {{
             background-color: yellow;
         }}
-
+        
         .scroll-to-bottom-button {{
             padding: 10px;
             font-size: 1em;
@@ -297,8 +231,8 @@ def generate_html(chat_data, participants, message_counts, output_html):
             border-radius: 4px;
             cursor: pointer;
             transition: background-color 0.3s ease;
-
-
+            
+    
         }}
 
         .scroll-to-top-button:hover {{
@@ -322,7 +256,7 @@ def generate_html(chat_data, participants, message_counts, output_html):
             <p>{participants[0]}: {message_counts[participants[0]]} messages</p>
             <p>{participants[1]}: {message_counts[participants[1]]} messages</p>
         </div>
-
+        
         <div>
             <button class="swap-button" onclick="swapParticipants()">Swap</button>
         </div>
@@ -344,9 +278,9 @@ def generate_html(chat_data, participants, message_counts, output_html):
         </div>
 """)
 
-        file.write("""
+        file.write("""        
     </div>
-
+            
     </div>
     <script>
         let searchIndex = -1;
@@ -403,7 +337,7 @@ def generate_html(chat_data, participants, message_counts, output_html):
             let messages = Array.from(document.querySelectorAll(".message"));
 
             let countParagraphs = messageCounts.querySelectorAll("p");
-            [countParagraphs[1].textContent, countParagraphs[2].textContent] =
+            [countParagraphs[1].textContent, countParagraphs[2].textContent] = 
                 [countParagraphs[2].textContent, countParagraphs[1].textContent];
 
             messages.forEach(message => {

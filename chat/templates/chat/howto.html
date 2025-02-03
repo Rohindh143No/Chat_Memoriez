@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>How to Use MEMORIEZ</title>
+    <title>How to Use CHAT-X</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
         /* General reset */
@@ -27,9 +27,9 @@
         }
 
         h2 {
-            font-size: 1em;
+            font-size: 1.5em;
             margin-bottom: 20px;
-            color:rgb(0, 0, 0); /* Neon aqua color */
+            color: #00ffff;
             text-transform: uppercase;
             text-shadow: 0 0 15px #00ffff, 0 0 25px #00ffff;
         }
@@ -51,50 +51,41 @@
             color: #ccc;
         }
 
-        .step-icon {
-            margin-right: 20px;
-            font-size: 1.5em;
-            color: #00ffff; /* Neon aqua */
-            text-shadow: 0 0 10px #00ffff;
-        }
-
         .step-number {
             font-weight: bold;
-            font-size: 0.6em;
+            font-size: 1em;
             color: #fff;
-            background-color:rgb(255, 32, 154);
-            text-shadow: 0 0 10px #00ffff;
+            background-color: #ff209a;
             border-radius: 50%;
             width: 30px;
             height: 30px;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-right: 15px;
+            margin-right: 20px;
+            text-shadow: 0 0 10px #00ffff;
+            flex-shrink: 0; /* Prevent shrinking */
         }
 
-        .app-icons {
+        .step-icon {
+            font-size: 2em;
+            color: #00ffff; /* Neon aqua */
+            text-shadow: 0 0 10px #00ffff;
+            width: 50px;
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin-top: 40px;
+            align-items: center;
+            margin-right: 20px;
         }
 
-        .app-icon {
-            background-color: #333;
-            padding: 15px;
-            border-radius: 50%;
-            font-size: 2em;
-            color: #00ffff;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        p {
+            font-size: 0.7em;
         }
 
-        .app-icon:hover {
-            background-color: #00ffff;
-            color: #333;
-            transform: scale(1.1);
+        hr {
+            border: 0;
+            border-top: 1px solid #444;
+            margin: 20px 0;
         }
 
         .footer {
@@ -112,14 +103,11 @@
         .footer a:hover {
             text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
         }
-        p{
-            font-size:0.6em;
-        }
     </style>
 </head>
 <body>
 
-    <h2>How to Use MEMORIEZ</h2>
+    <h2>How to Use CHAT-X</h2>
 
     <div class="content">
         <!-- Step 1 -->
@@ -128,6 +116,7 @@
             <div class="step-icon"><i class="fab fa-whatsapp"></i></div>
             <p>Open WhatsApp and go to any chat.</p>
         </div>
+        <hr>
 
         <!-- Step 2 -->
         <div class="step">
@@ -135,6 +124,7 @@
             <div class="step-icon"><i class="fas fa-ellipsis-h"></i></div>
             <p>Click on the 3 dots in the top right corner.</p>
         </div>
+        <hr>
 
         <!-- Step 3 -->
         <div class="step">
@@ -142,6 +132,7 @@
             <div class="step-icon"><i class="fas fa-download"></i></div>
             <p>Select "Export Chat" without Media.</p>
         </div>
+        <hr>
 
         <!-- Step 4 -->
         <div class="step">
@@ -149,13 +140,15 @@
             <div class="step-icon"><i class="fas fa-folder-open"></i></div>
             <p>The chat will be exported as a ZIP file. Extract it to a folder.</p>
         </div>
+        <hr>
 
         <!-- Step 5 -->
         <div class="step">
             <div class="step-number">5</div>
             <div class="step-icon"><i class="fas fa-globe"></i></div>
-            <p>Go to the MEMORIEZ website and select the text file inside the extracted ZIP file.</p>
+            <p>Go to the CHAT-X website and select the text file inside the extracted ZIP file.</p>
         </div>
+        <hr>
 
         <!-- Step 6 -->
         <div class="step">
@@ -163,6 +156,7 @@
             <div class="step-icon"><i class="fas fa-arrow-right"></i></div>
             <p>Click "Generate" to process your file.</p>
         </div>
+        <hr>
 
         <!-- Step 7 -->
         <div class="step">
@@ -172,10 +166,8 @@
         </div>
     </div>
 
-   
-
     <div class="footer">
-        <p>&copy; 2025 MEMORIEZ. All rights reserved.</p>
+        <p>&copy; 2025 CHAT-X. All rights reserved.</p>
     </div>
 
 </body>
